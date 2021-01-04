@@ -26,7 +26,7 @@ Convert text to voice by google
 
 ──「 **Voice Language** 」──
 -> `voicelang (lang_id)`
-Set language of your voice,Some Available Voice lang:
+Set language of your voice, Some Available Voice lang:
 `ID| Language  | ID| Language`
 `af: Afrikaans | ar: Arabic
 cs: Czech     | de: German
