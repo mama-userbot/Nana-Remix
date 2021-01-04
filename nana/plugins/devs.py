@@ -130,7 +130,11 @@ async def executor(client, message):
         os.remove(filename)
         await message.delete()
     else:
-        await edit_or_reply(message, text=final_output)
+        await edit_or_reply(
+            message,
+            text=final_output,
+            parse_mode="markdown"
+        )
 
 
 @app.on_message(

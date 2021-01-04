@@ -17,6 +17,7 @@ from pyrogram.errors import (
 from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 from nana.utils.admincheck import admin_check
 from nana.languages.strings import tld
+from nana.utils.capture_errors import capture_err
 
 
 __MODULE__ = "Admin"
@@ -121,6 +122,7 @@ unmute_permissions = ChatPermissions(
 @app.on_message(
     filters.user(AdminSettings) & filters.command("unpin", COMMAND_PREFIXES)
 )
+@capture_err
 async def unpin_message(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
@@ -159,6 +161,7 @@ async def unpin_message(client, message):
 @app.on_message(
     filters.user(AdminSettings) & filters.command("invite", COMMAND_PREFIXES)
 )
+@capture_err
 async def invite_link(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_name = message.chat.title
@@ -180,6 +183,7 @@ async def invite_link(client, message):
     filters.user(AdminSettings) &
     filters.command("pin", COMMAND_PREFIXES)
 )
+@capture_err
 async def pin_message(client, message):
     if message.chat.type in ["group", "supergroup"]:
         can_pin = await admin_check(message)
@@ -220,6 +224,7 @@ async def pin_message(client, message):
     filters.user(AdminSettings) &
     filters.command("mute", COMMAND_PREFIXES)
 )
+@capture_err
 async def mute_hammer(client, message):
     if message.chat.type in ["group", "supergroup"]:
         can_mute = await admin_check(message)
@@ -255,6 +260,7 @@ async def mute_hammer(client, message):
 @app.on_message(
     filters.user(AdminSettings) & filters.command("unmute", COMMAND_PREFIXES)
 )
+@capture_err
 async def unmute(client, message):
     if message.chat.type in ["group", "supergroup"]:
         can_unmute = await admin_check(message)
@@ -292,6 +298,7 @@ async def unmute(client, message):
     filters.user(AdminSettings) &
     filters.command("kick", COMMAND_PREFIXES)
 )
+@capture_err
 async def kick_user(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
@@ -331,6 +338,7 @@ async def kick_user(client, message):
     filters.user(AdminSettings) &
     filters.command("ban", COMMAND_PREFIXES)
 )
+@capture_err
 async def ban_usr(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
@@ -383,6 +391,7 @@ async def ban_usr(client, message):
 @app.on_message(
     filters.user(AdminSettings) & filters.command("unban", COMMAND_PREFIXES)
 )
+@capture_err
 async def unban_usr(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
@@ -419,10 +428,6 @@ async def unban_usr(client, message):
             except ChatAdminRequired:
                 await edit_or_reply(message, text="`permission denied`")
                 return
-
-            except Exception as e:
-                await edit_or_reply(message, text=f"**Log:** `{e}`")
-                return
     else:
         await message.delete()
 
@@ -431,6 +436,7 @@ async def unban_usr(client, message):
     filters.user(AdminSettings) &
     filters.command("promote", COMMAND_PREFIXES)
 )
+@capture_err
 async def promote_usr(client, message):
     if message.chat.type in ["group", "supergroup"]:
         cmd = message.command
@@ -487,10 +493,6 @@ async def promote_usr(client, message):
                     await message.delete()
                     return
 
-                except Exception as e:
-                    await edit_or_reply(message, text=f"**Log:** `{e}`")
-                    return
-
         else:
             await edit_or_reply(message, text=tld("denied_permission"))
             await asyncio.sleep(5)
@@ -500,8 +502,10 @@ async def promote_usr(client, message):
 
 
 @app.on_message(
-    filters.user(AdminSettings) & filters.command("demote", COMMAND_PREFIXES)
+    filters.user(AdminSettings) &
+    filters.command("demote", COMMAND_PREFIXES)
 )
+@capture_err
 async def demote_usr(client, message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
@@ -532,10 +536,6 @@ async def demote_usr(client, message):
                 await asyncio.sleep(5)
                 await message.delete()
                 return
-
-            except Exception as e:
-                await edit_or_reply(message, text=f"**Log:** `{e}`")
-                return
     else:
         await message.delete()
 
@@ -544,6 +544,7 @@ async def demote_usr(client, message):
     filters.user(AdminSettings) &
     filters.command("lock", COMMAND_PREFIXES)
 )
+@capture_err
 async def lock_permission(client, message):
     """module that locks group permissions"""
     if message.chat.type in ["group", "supergroup"]:
@@ -573,19 +574,15 @@ async def lock_permission(client, message):
         pin = get_perm.permissions.can_pin_messages
 
         if lock_type == "all":
-            try:
-                await client.set_chat_permissions(chat_id, ChatPermissions())
-                await edit_or_reply(message, text=tld("lock_all"))
-                await asyncio.sleep(5)
-                await message.delete()
-
-            except Exception as e:
-                print(e)
-                await edit_or_reply(
-                    message,
-                    text=tld("denied_permission")
-                )
-            return
+            await asyncio.gather(
+                client.set_chat_permissions(
+                    chat_id,
+                    ChatPermissions()
+                ),
+                edit_or_reply(message, text=tld("lock_all")),
+                asyncio.sleep(5),
+                message.delete(),
+            )
 
         if lock_type == "messages":
             messages = False
@@ -669,6 +666,7 @@ async def lock_permission(client, message):
     filters.user(AdminSettings) &
     filters.command("unlock", COMMAND_PREFIXES)
 )
+@capture_err
 async def unlock_permission(client, message):
     """this module unlocks group permission for admins"""
     if message.chat.type in ["group", "supergroup"]:
@@ -821,8 +819,10 @@ async def unlock_permission(client, message):
 
 
 @app.on_message(
-    filters.user(AdminSettings) & filters.command("vlock", COMMAND_PREFIXES)
+    filters.user(AdminSettings) &
+    filters.command("vlock", COMMAND_PREFIXES)
 )
+@capture_err
 async def view_perm(client, message):
     """view group permission."""
     if message.chat.type in ["group", "supergroup"]:
@@ -891,6 +891,7 @@ async def view_perm(client, message):
     filters.user(AdminSettings) &
     filters.command("delacc", COMMAND_PREFIXES)
 )
+@capture_err
 async def deleted_clean(client, message):
     cmd = message.command
     chat_id = message.chat.id
@@ -952,6 +953,7 @@ async def deleted_clean(client, message):
     filters.user(AdminSettings) &
     filters.command("cgroupcall", COMMAND_PREFIXES)
 )
+@capture_err
 async def create_group_call(_, message):
     cmd = message.command
     try:
