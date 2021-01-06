@@ -119,7 +119,7 @@ async def report_admin(client, message):
     )
     admin = [
         mention_html(a.user.id, "\u200b")
-        for a in alladmins
+        async for a in alladmins
         if a.status in ["administrator", "creator"] and not a.user.is_bot
     ]
 
