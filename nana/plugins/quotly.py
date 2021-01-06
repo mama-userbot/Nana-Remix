@@ -1,6 +1,7 @@
 from asyncio import sleep
 from pyrogram import filters
 from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
+from nana.utils.sticker import create_sticker
 
 __MODULE__ = "Quotly"
 __HELP__ = """
@@ -46,3 +47,16 @@ async def q_maker(_, message):
         "@QuotLyBot",
         msg_id
     )
+
+
+@app.on_message(
+    filters.user(AdminSettings) &
+    filters.command("quote", COMMAND_PREFIXES)
+)
+async def qoute_maker(client, message):
+    if message.reply_to_message:
+        await create_sticker(client, message.reply_to_message)
+    else:
+        await create_sticker(client, message)
+
+    await message.delete()
