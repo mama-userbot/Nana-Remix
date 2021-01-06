@@ -33,16 +33,16 @@ urlretrieve(
 
 async def create_sticker(client, message):
     if len(message.text) < 100:
-        body_font_size = 35
+        body_font_size = 25
         wrap_size = 40
     elif len(message.text) < 200:
-        body_font_size = 30
+        body_font_size = 20
         wrap_size = 45
     elif len(message.text) < 500:
-        body_font_size = 25
+        body_font_size = 17
         wrap_size = 50
     elif len(message.text) < 1000:
-        body_font_size = 17
+        body_font_size = 15
         wrap_size = 90
     else:
         body_font_size = 8
