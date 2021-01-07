@@ -118,7 +118,10 @@ async def download_from_url(_, message):
     try:
         os.listdir("nana/downloads/")
     except FileNotFoundError:
-        await edit_or_reply(message, text="Invalid download path is provided in config!")
+        await edit_or_reply(
+            message,
+            text="Invalid download path is provided in config!"
+        )
         return
     await edit_or_reply(message, text="Downloading...")
     download = await download_url(url, file_name)

@@ -170,12 +170,14 @@ async def spam(client, message):
 async def spam_stick(client, message):
     if not message.reply_to_message:
         await edit_or_reply(
-            message, text="**Reply a sticker with the amount of times you want to spam it.**"
+            message,
+            text="**Reply to a sticker with the amount.**"
         )
         return
     if not message.reply_to_message.sticker:
         await edit_or_reply(
-            message, text="**Reply a sticker with the amount of times you want to spam it.**"
+            message,
+            text="**Reply to a sticker with the amount.**"
         )
         return
     else:

@@ -11,7 +11,8 @@ __MODULE__ = "Admin List"
 __HELP__ = """
 This module is for checking admins/bots or report someone in a group,
 and not for spamming.
-Please note that spamming these commands might lead to annoying admins or even banning you.
+Please note that spamming these commands
+might lead to annoying admins or even banning you.
 
 ──「 **Admin list** 」──
 -> `admins`

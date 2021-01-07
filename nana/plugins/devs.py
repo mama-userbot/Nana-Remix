@@ -14,7 +14,8 @@ from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """
-This module is for those who know programming or getting some technical information about your (user)bot or user account.
+This module is for those who know programming or
+getting some technical information about your (user)bot or user account.
 
 ──「 **Python** 」──
 -> `eval (command)`

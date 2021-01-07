@@ -14,7 +14,8 @@ Download any file from URL or Telegram.
 Give url as args to download it.
 
 **Note**
-- This is a synchronous module, you cannot use your userbot while this module is downloading a file.
+- This is a synchronous module,
+  you cannot use your userbot while this module is downloading a file.
 - Folders are not supported atm.
 """
 

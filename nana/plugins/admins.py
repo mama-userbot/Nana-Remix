@@ -151,7 +151,9 @@ async def unpin_message(client, message):
                 return
 
             except Exception as e:
-                await edit_or_reply(message, text=f"`Error occured!`\n**Log:** `{e}`")
+                await edit_or_reply(
+                    message,
+                    text=f"`Error occured!`\n**Log:** `{e}`")
                 return
         else:
             await edit_or_reply(message, text=tld("denied_permission"))

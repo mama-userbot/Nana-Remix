@@ -22,7 +22,10 @@ if DB_AVAILABLE:
 __MODULE__ = "AFK"
 __HELP__ = """
 Module for enabling auto replies when you are AFK.
-When enabled, anyone who mentions you will be replied with a message saying that you are AFK plus the assistant will send you a message saying that someone mentioned you.
+When enabled,
+anyone who mentions you will be replied with a message saying that
+you are AFK plus the assistant will
+send you a message saying that someone mentioned you.
 
 Restarting your bot won't remove your AFK status.
 
@@ -142,7 +145,7 @@ async def afk_mentioned(_, message):
         )
         await setbot.send_message(
             Owner,
-            "{} mentioned you in {}\n\n{}\n\nTotal mentions count: `{}`".format(
+            "{} mentioned you in {}\n\n{}\n\nTotal mentions: `{}`".format(
                 mention_markdown(
                     message.from_user.id,
                     message.from_user.first_name
