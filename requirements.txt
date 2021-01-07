@@ -37,5 +37,6 @@ typing==3.7.4.1
 spamwatch==0.3.0
 htmlement==1.0.0
 pyYAML
+git+https://github.com/pokurt/rextester_py@nana
 mega.py==1.0.8
 pyOpenSSL==20.0.1
