@@ -14,8 +14,7 @@ from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
 __MODULE__ = "Memes"
 __HELP__ = """
-This module can help you for generate memes and style text,
-just take a look and try in here!
+This module can help you generate memes and stylish text.
 
 ──「 **Stretch Text** 」──
 -> `str`
@@ -23,11 +22,11 @@ __stretch text__
 
 ──「 **Copy Pasta** 」──
 -> `cp`
-__add randoms emoji to text.__
+__add randoms emoji to text__
 
 ──「 **Scam** 」──
 -> `scam <action>`
-__chat input action.__
+__chat input action__
 
 **scame types**:
 `typing` `upload_photo`
@@ -39,30 +38,30 @@ __chat input action.__
 
 ──「 **Mock text** 」──
 -> `mocktxt`
-__Mock someone with text.__
+__mock someone with text__
 
 ──「 **Vaporwave/Aestethic** 」──
 -> `aes`
-__Convert your text to Vaporwave.__
+__convert your text to vaporwave__
 
-──「 **SPAM** 」──
--> `spam` (value) (word)
-__spams a word with value given__
+──「 **Spam** 」──
+-> `spam` (times) (phrase)
+__spams a phrase multiple times__
 
--> `spamstk` (value)
-__Reply to a sticker to spam the sticker__
+-> `spamstk` (times)
+__reply a sticker to spam it__
 
 ──「 **Shrugs** 」──
 -> `shg`
-__Free Shrugs?..__
+__free shrugs?__
 
 ──「 **Pat** 」──
 -> `pat`
 __pat gifs__
 
-——「 **the F sign** 」──
+——「 **The F Sign** 」──
 -> `f`
-__press **f** to show some respect!__
+__press **f** to show some respect__
 
 ──「 **Fake Screenshot** 」──
 -> `fakess`
@@ -171,12 +170,12 @@ async def spam(client, message):
 async def spam_stick(client, message):
     if not message.reply_to_message:
         await edit_or_reply(
-            message, text="**reply to a sticker with amount you want to spam**"
+            message, text="**Reply a sticker with the amount of times you want to spam it.**"
         )
         return
     if not message.reply_to_message.sticker:
         await edit_or_reply(
-            message, text="**reply to a sticker with amount you want to spam**"
+            message, text="**Reply a sticker with the amount of times you want to spam it.**"
         )
         return
     else:

@@ -49,7 +49,7 @@ type that command and select another or create new from @Stickers!
 )
 async def kang_stickers(client, message):
     if not DB_AVAILABLE:
-        await edit_or_reply(message, text="Your database is not avaiable!")
+        await edit_or_reply(message, text="You haven't set up a database!")
         return
     sticker_pack = get_sticker_set(message.from_user.id)
     animation_pack = get_stanim_set(message.from_user.id)

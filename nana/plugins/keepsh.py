@@ -12,12 +12,11 @@ from .downloads import download_file_from_tg, name_file, humanbytes
 
 __MODULE__ = "Keep.sh"
 __HELP__ = """
-Mirror any telegram file to keep.sh
+Mirror any telegram file to keep.sh.
 
-──「 **Transfer telegram file** 」──
+──「 **Transfer Telegram File** 」──
 -> `keepsh`
-Reply to telegram file for mirroring to keep.sh
-
+Reply to telegram file for mirroring it to keep.sh.
 """
 
 
@@ -28,7 +27,7 @@ async def tfsh(client, message):
     if not message.reply_to_message:
         await edit_or_reply(
             message,
-            text="`Reply to any file telegram message!`"
+            text="`Reply to a file!`"
         )
         return
     await edit_or_reply(message, text="`Processing...`")
@@ -60,7 +59,7 @@ async def send_to_keepsh(file, message, name):
 
     await edit_or_reply(
         message,
-        text="\nSending file: {} (size of the file: {})".format(
+        text="\nSending file: {} (size: {})".format(
             file_name, size_of_file
         ),
     )
@@ -75,10 +74,10 @@ async def send_to_keepsh(file, message, name):
             download_link = c.perform_rs()
         except pycurl.error as e:
             log.error(e)
-            return "Unsupported file format!"
+            return "Unsupported file type!"
         c.close()
     f.close()
-    return "`Success!\nwill be saved till {}`\n{}".format(
+    return "`Success!\nWill be saved until {}`\n{}".format(
         final_date,
         download_link
     )

@@ -51,7 +51,7 @@ async def alivemsg_callback(client, query):
     end_time = time.time()
     ping_time = round((end_time - start_time) * 1000, 3)
     reply_msg += f"Ping: {ping_time}ms\n"
-    reply_msg += f"Userbot uptime: {uptime}"
+    reply_msg += f"Uptime: {uptime}"
     await client.answer_callback_query(query.id, reply_msg, show_alert=True)
 
 

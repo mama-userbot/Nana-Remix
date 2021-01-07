@@ -9,17 +9,16 @@ from nana import COMMAND_PREFIXES, app, AdminSettings, edit_or_reply
 
 __MODULE__ = "Metrics"
 __HELP__ = """
-This module can help you do the wordcount in the last 1000 messages
-in a groupchat or private chat.
+This module can help you do wordcount in the last 1000 messages
+in achat.
 
 ──「 **Word Count** 」──
 -> `wordcount` or `wc`
-Finds the 25 most used words in the last 1000 messages in a chat.
+Finds the 25 most used words in the last 1000 messages in the chat.
 
-──「 **Inactive message count** 」──
+──「 **Inactive Message Count** 」──
 -> `msg` or `msg <integer>`
-Finds the inactive users with last message in a chat.
-
+Finds the inactive users according to the last messages in the chat.
 """
 
 

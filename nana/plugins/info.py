@@ -17,9 +17,8 @@ from nana import (
 __MODULE__ = "Whois"
 __HELP__ = """
 ──「 **Whois** 」──
--> `info` `@username` or `user_id`
--> `info` "reply to a text"
-To find information about a person.
+-> `info` `@username`, `user_id` or reply
+To get information about someone.
 """
 
 
@@ -88,7 +87,7 @@ async def whois(client, message):
 
 
 async def parse_info(client, info):
-    user_info = "╒═══「 ✨ **User info** 」\n"
+    user_info = "╒═══「 ✨ **User Info** 」\n"
     user_info += "│ • **First Name:** {}\n".format(info.mention)
     if info.last_name:
         user_info += "│ • **Last Name:** {}\n".format(info.last_name)
@@ -106,13 +105,13 @@ async def parse_info(client, info):
     if not info.is_self:
         user_info += "│ • **Last Online:** `{}`\n".format(LastOnline(info))
         user_info += "│ • **Common Chats:** `{}`\n".format(
-                len(
-                    (
-                        await GetCommon(
-                            client, info.id
-                        )
-                    ).chats
-                )
+            len(
+                (
+                    await GetCommon(
+                        client, info.id
+                    )
+                ).chats
             )
+        )
     user_info += "╘══「 **ID:** `{}` 」".format(info.id)
     return user_info

@@ -21,23 +21,16 @@ if DB_AVAILABLE:
 
 __MODULE__ = "AFK"
 __HELP__ = """
-Set yourself to afk.
-When marked as AFK,
-any mentions will be replied to with a message to say you're not available!
-And that mentioned will notify you by your Assistant.
+Module for enabling auto replies when you are AFK.
+When enabled, anyone who mentions you will be replied with a message saying that you are AFK plus the assistant will send you a message saying that someone mentioned you.
 
-If you're restart your bot, all counter and data in cache will be reset.
-But you will still in afk, and always reply when got mentioned.
+Restarting your bot won't remove your AFK status.
 
-──「 **Set AFK status** 」──
--> `afk (*reason)` Set yourself to afk,
-give a reason if need. When someone tag you,
-you will says in afk with reason,
-and that mentioned will sent in your assistant PM.
+──「 **Setting AFK Status** 」──
+-> `afk (*reason)`
+Enable auto replies when you are AFK.
 
-To exit from afk status,
-send anything to anywhere,
-exclude PM and saved message.
+To stop it, send something somewhere (excluding PM and saved messages).
 
 * = Optional
 """
@@ -51,12 +44,12 @@ DELAY_TIME = 60  # seconds
 @app.on_message(filters.me & (filters.command("afk", COMMAND_PREFIXES)))
 async def afk(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     if len(message.text.split()) >= 2:
         set_afk(True, message.text.split(None, 1)[1])
         await message.edit(
-            "{} is now AFK!\nBecause of {}".format(
+            "{} is now AFK!\nReason: {}".format(
                 mention_markdown(
                     message.from_user.id,
                     message.from_user.first_name
@@ -66,7 +59,7 @@ async def afk(_, message):
         )
         await setbot.send_message(
             Owner,
-            "You are now AFK!\nBecause of {}".format(
+            "You are now AFK!\nReason: {}".format(
                 message.text.split(None, 1)[1]
             ),
         )
@@ -106,7 +99,7 @@ async def afk_mentioned(_, message):
         if get["reason"]:
             await edit_or_reply(
                 message,
-                text="Sorry, {} is AFK!\nBecause of {}".format(
+                text="Sorry, {} is AFK!\nReason: {}".format(
                     mention_markdown(Owner, OwnerName),
                     get['reason']
                 )
@@ -149,7 +142,7 @@ async def afk_mentioned(_, message):
         )
         await setbot.send_message(
             Owner,
-            "{} mentioned you in {}\n\n{}\n\nTotal count: `{}`".format(
+            "{} mentioned you in {}\n\n{}\n\nTotal mentions count: `{}`".format(
                 mention_markdown(
                     message.from_user.id,
                     message.from_user.first_name
@@ -171,10 +164,11 @@ async def no_longer_afk(_, message):
     if get and get["afk"]:
         await setbot.send_message(
             message.from_user.id,
-            "You are no longer afk!"
+            "You are no longer AFK!"
         )
         set_afk(False, "")
-        text = "**Total {} mentioned you**\n".format(len(MENTIONED))
+        text = "**While you were AFK, you were mentioned {} times.**\n".format(
+            len(MENTIONED))
         for x in MENTIONED:
             msg_text = x["text"]
             if len(msg_text) >= 11:

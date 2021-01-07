@@ -7,15 +7,15 @@ from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
 __MODULE__ = "Mega"
 __HELP__ = """
-Download any file from URL or from telegram
-──「 **Download mega file from URL** 」──
+Download any file from URL or Telegram.
+
+──「 **Download Mega File From URL** 」──
 -> `mega (url)`
 Give url as args to download it.
 
 **Note**
-this is a sync module.
-you cannot use your userbot while mega is downloading a file
-For now folders are not supported yet
+- This is a synchronous module, you cannot use your userbot while this module is downloading a file.
+- Folders are not supported atm.
 """
 
 
@@ -30,7 +30,7 @@ async def megadl(url):
 async def mega_download(_, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await edit_or_reply(message, text="usage: mega (url)")
+        await edit_or_reply(message, text="Usage: mega (url)")
         return
     await edit_or_reply(message, text="__Processing...__")
     if not os.path.exists("nana/downloads/mega"):

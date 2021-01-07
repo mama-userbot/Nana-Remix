@@ -14,31 +14,31 @@ from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """
-This command means for helping development
+This module is for those who know programming or getting some technical information about your (user)bot or user account.
 
-──「 **Execution** 」──
+──「 **Python** 」──
 -> `eval (command)`
-Python Shell Execution
+Run Python code
 
-──「 **Command shell** 」──
+──「 **Shell** 」──
 -> `sh (command)`
-Execute command shell
+Execute shell commands
 
 ──「 **Take log** 」──
 -> `log`
-Edit log message, or nekobin instead
+Upload the recent logs on nekobin and send it
 
-──「 **Get Data Center** 」──
+──「 **Data Centers** 」──
 -> `dc`
-Get user specific data center
+Get your DC
 
-──「 **Test Your Server Internet Speed** 」──
+──「 **Testing The Internet Speed Of Your Server** 」──
 -> `speedtest`
-Obtain Server internet speed using speedtest
+See internet speed and some other info
 
-──「 **Get ID** 」──
+──「 **IDs** 」──
 -> `id`
-Send id of what you replied to
+Send ID of what you replied to
 
 ──「 **Self Destruct Reveal** 」──
 -> `reveal` or `reveal self`
@@ -112,7 +112,7 @@ async def executor(client, message):
     else:
         evaluation = "Success"
     final_output = (
-        "**QUERY**:\n```{}```\n\n**OUTPUT**:\n```{}```".format(
+        "**Input**:\n```{}```\n\n**Result**:\n```{}```".format(
             cmd,
             evaluation.strip()
         )
@@ -225,7 +225,7 @@ async def terminal(client, message):
                 message.chat.id,
                 "nana/cache/output.txt",
                 reply_to_message_id=message.message_id,
-                caption="`Output file`",
+                caption="`Output`",
             )
             os.remove("nana/cache/output.txt")
             return
@@ -238,7 +238,7 @@ async def terminal(client, message):
     else:
         await edit_or_reply(
             message,
-            text="**Input: **\n`{}`\n\n**Output: **\n`No Output`".format(
+            text="**Input: **\n`{}`\n\n**Output: **\n`No output`".format(
                 teks
             )
         )
@@ -252,7 +252,7 @@ async def log(_, message):
     data = await nekobin(f.read())
     await edit_or_reply(
         message,
-        text=f"`Your recent logs stored here : `{data}",
+        text=f"`Your recent logs stored are here: `{data}",
         disable_web_page_preview=True,
     )
 
@@ -303,7 +303,7 @@ async def dc_id_check(_, message):
             user
         )
     else:
-        text = "{}'s assigned DC is **Unknown**".format(user)
+        text = "{}'s assigned DC is **unknown**".format(user)
     await edit_or_reply(message, text=text)
 
 
@@ -318,58 +318,58 @@ async def get_id(_, message):
         rep = message.reply_to_message
         if rep.audio:
             file_id = f"**File ID**: `{rep.audio.file_id}`\n"
-            file_id += "**File Type**: `audio`\n"
+            file_id += "**File type**: `audio`\n"
         elif rep.document:
             file_id = f"**File ID**: `{rep.document.file_id}`\n"
-            file_id += f"**File Type**: `{rep.document.mime_type}`\n"
+            file_id += f"**File type**: `{rep.document.mime_type}`\n"
         elif rep.photo:
             file_id = f"**File ID**: `{rep.photo.file_id}`\n"
-            file_id += "**File Type**: `photo`"
+            file_id += "**File type**: `photo`"
         elif rep.sticker:
             file_id = f"**Sicker ID**: `{rep.sticker.file_id}`\n"
             if rep.sticker.set_name and rep.sticker.emoji:
-                file_id += "**Sticker Set**: `{}`\n".format(
+                file_id += "**Sticker set**: `{}`\n".format(
                     rep.sticker.set_name
                 )
-                file_id += f"**Sticker Emoji**: `{rep.sticker.emoji}`\n"
+                file_id += f"**Sticker emoji**: `{rep.sticker.emoji}`\n"
                 if rep.sticker.is_animated:
-                    file_id += "**Animated Sticker**: `{}`\n".format(
+                    file_id += "**Animated sticker**: `{}`\n".format(
                         rep.sticker.is_animated
                     )
                 else:
-                    file_id += "**Animated Sticker**: `False`\n"
+                    file_id += "**Animated sticker**: `False`\n"
             else:
-                file_id += "**Sticker Set**: __None__\n"
-                file_id += "**Sticker Emoji**: __None__"
+                file_id += "**Sticker set**: __None__\n"
+                file_id += "**Sticker emoji**: __None__"
         elif rep.video:
             file_id = f"**File ID**: `{rep.video.file_id}`\n"
-            file_id += "**File Type**: `video`"
+            file_id += "**File type**: `video`"
         elif rep.animation:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
-            file_id += "**File Type**: `GIF`"
+            file_id += "**File type**: `GIF`"
         elif rep.voice:
             file_id = f"**File ID**: `{rep.voice.file_id}`\n"
-            file_id += "**File Type**: `Voice Note`"
+            file_id += "**File type**: `voice note`"
         elif rep.video_note:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
-            file_id += "**File Type**: `Video Note`"
+            file_id += "**File type**: `video note`"
         elif rep.location:
             file_id = "**Location**:\n"
-            file_id += f"**longitude**: `{rep.location.longitude}`\n"
-            file_id += f"**latitude**: `{rep.location.latitude}`"
+            file_id += f"    **Longitude**: `{rep.location.longitude}`\n"
+            file_id += f"    **Latitude**: `{rep.location.latitude}`"
         elif rep.venue:
             file_id = "**Location**:\n"
-            file_id += f"**longitude**: `{rep.venue.location.longitude}`\n"
-            file_id += f"**latitude**: `{rep.venue.location.latitude}`\n\n"
+            file_id += f"    **Longitude**: `{rep.venue.location.longitude}`\n"
+            file_id += f"    **Latitude**: `{rep.venue.location.latitude}`\n\n"
             file_id += "**Address**:\n"
-            file_id += f"**title**: `{rep.venue.title}`\n"
-            file_id += f"**detailed**: `{rep.venue.address}`\n\n"
+            file_id += f"    **Title**: `{rep.venue.title}`\n"
+            file_id += f"    **Detail**: `{rep.venue.address}`\n\n"
         elif rep.from_user:
             user_id = rep.from_user.id
     if user_id:
         if rep.forward_from:
             user_detail = (
-                "**Forwarded User ID**: `{}`\n".format(
+                "**Forwarded from user ID**: `{}`\n".format(
                     message.reply_to_message.forward_from.id
                 )
             )
@@ -384,7 +384,7 @@ async def get_id(_, message):
     elif file_id:
         if rep.forward_from:
             user_detail = (
-                "**Forwarded User ID**: `{}`\n".format(
+                "**Forwarded from user ID**: `{}`\n".format(
                     message.reply_to_message.forward_from.id
                 )
             )

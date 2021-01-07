@@ -7,11 +7,11 @@ from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Covid"
 __HELP__ = """
-Check info of cases corona virus disease 2019
+Get stats of COVID 19.
 
 ──「 **Info Covid** 」──
--> `covid - for Global Stats`
--> `covid (country) - for a Country Stats`
+-> `covid - for global stats`
+-> `covid (country) - for a specific country's stats`
 """
 
 
@@ -23,7 +23,7 @@ async def corona(_, message):
     if len(args) == 1:
         try:
             r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all")
-            reply_text = f"""**Global Cases 🦠:**
+            reply_text = f"""**COVID-19 in the world 🦠:**
  - **Cases:** `{r['cases']:,}`
  - **Cases Today:** `{r['todayCases']:,}`
  - **Deaths:** `{r['deaths']:,}`
@@ -39,7 +39,7 @@ async def corona(_, message):
         except Exception as e:
             await edit_or_reply(
                 message,
-                text="`The corona API could not be reached`"
+                text="`Couldn't reach the API.`"
             )
             print(e)
             await asyncio.sleep(3)
@@ -52,13 +52,13 @@ async def corona(_, message):
     if "cases" not in r:
         await edit_or_reply(
             message,
-            text="```The country could not be found!```"
+            text="`The country could not be found!`"
         )
         await asyncio.sleep(3)
         await message.delete()
     else:
         try:
-            reply_text = f"""**Cases for {r['country']} 🦠:**
+            reply_text = f"""**COVID-19 in {r['country']} 🦠:**
  - **Cases:** `{r['cases']:,}`
  - **Cases Today:** `{r['todayCases']:,}`
  - **Deaths:** `{r['deaths']:,}`
@@ -73,7 +73,7 @@ async def corona(_, message):
         except Exception as e:
             await edit_or_reply(
                 message,
-                text="`The corona API could not be reached`"
+                text="`Couldn't reach the API.`"
             )
             print(e)
             await asyncio.sleep(3)

@@ -156,7 +156,7 @@ async def updater(client, message):
         exc_type, exc_obj, exc_tb = sys.exc_info()
         await edit_or_reply(
             message,
-            text="An error has accured!",
+            text="An error occured!",
         )
         await except_hook(exc_type, exc_obj, exc_tb)
         return

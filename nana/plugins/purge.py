@@ -8,33 +8,24 @@ from nana import Owner, app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
 __MODULE__ = "Purges"
 __HELP__ = """
-Purge many messages in less than one seconds,
-you need to became admin to do this.
-Except for purgeme feature
-Do with you own risk!
+Use this module with your own risk!
+Developers created this module for managing groups, not anything else!
+No deleted messages can be restored.
 
-Developer create this module only for managing group, not for trolling user!
-Read this before take an action!
--> All deleted message cannot restore
 -> **DON'T DESTROY/DELETE ALL MESSAGES**,
-developer will not responsible if you're nuked your chat group.
-Except for cleaning group purposes.
-Ok look like you're understand
-what happened if you playing with this powerful weapon.
+developer will not responsible if you nuked your chat.
+
 ──「 **Purge** 」──
--> `purge`
-Purge from bellow to that replyed message,
-you need to became admins to do this!
-Give a number **without reply** to purge for x messages.
+-> `purge` (number of messages) or reply to old message
+Fast purge.
 
 ──「 **Purge My Messages** 」──
--> `purgeme`
-Purge your messages only, no need admin permission.
+-> `purgeme` (number of messages)
+Purge your messages, no admin permissions needed.
 
 ──「 **Delete** 」─
 -> `del`
-Delete's a message that you reply to
-
+Delete the replied message.
 """
 
 

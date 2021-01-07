@@ -23,23 +23,23 @@ from .downloads import progressdl
 
 __MODULE__ = "GDrive"
 __HELP__ = """
-Google Drive stuff, for login just type /gdrive in Assistant bot
+For logging just use /gdrive.
 
 ──「 **Download From Drive URL** 」──
 -> `gdrive download (url)`
-Give url as args to download it.
+Give a url as an arg to download it.
 
-──「 **Upload From local to Google Drive** 」──
+──「 **Upload To Google Drive** 」──
 -> `gdrive upload (file)`
-Upload from local storage to gdrive
+Upload from local storage to gdrive.
 
-──「 **Mirror and save to GDrive file** 」──
+──「 **Mirror And Save To GDrive File** 」──
 -> `gdrive mirror`
-This can mirror from file download was limited, but not for deleted file
+This can mirror from file download was limited, but not for deleted file.
 
 ──「 **Mirror from telegram to GDrive** 」──
 -> `gdrive tgmirror`
-Download file from telegram, and mirror it to Google Drive
+Download file from telegram, and mirror it to Google Drive.
 
 ──「 **Mirror from URL to GDrive** 」──
 -> `gdrive urlmirror`

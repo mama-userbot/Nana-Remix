@@ -5,14 +5,14 @@ from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
 __MODULE__ = "Calculator"
 __HELP__ = """
-Calculator, converting, math, etc.
+Module for calculation, convertion, and etc.
 
-──「 **Money converter** 」──
+──「 **Money Convertion** 」──
 -> `curr (value) (from) (to)`
-Examlpe: `curr 100 USD IDR`
+Example: `curr 100 USD IDR`
 Output: `USD 100 = IDR 1,409,500.40`
 
-──「 **Temperature converter** 」──
+──「 **Temperature Conversion** 」──
 -> `temp (value) (Type)`
 Examlpe: `temp 30 C`
 Output: `30°C = 86.0°F`

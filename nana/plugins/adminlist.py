@@ -9,24 +9,23 @@ from nana.utils import capture_err
 
 __MODULE__ = "Admin List"
 __HELP__ = """
-This module meant for check admins/bots or report someone,
-not for spamming groups.
-Please note spam admin will give you instant banned.
-Don't play with this command if you understand what it cost!
+This module is for checking admins/bots or report someone in a group,
+and not for spamming.
+Please note that spamming these commands might lead to annoying admins or even banning you.
 
 ──「 **Admin list** 」──
 -> `admins`
 -> `adminlist`
-For get admin list in spesific chat or current chat
+Get a list of admins in a specific chat or the chat you send it in
 
 ──「 **Report admin** 」──
 -> `reportadmin`
 -> `reportadmins`
-To report someone or report your message to all admins
+Tag all admins in a message
 
 ──「 **Bot list** 」──
 -> `botlist`
-Check all bots in spesific chat or current chat
+Get a list of bots in a specific chat or the chat you send it in
 """
 
 
@@ -58,7 +57,7 @@ async def adminlist(client, message):
         except BaseException:
             nama = a.user.first_name
         if nama is None:
-            nama = "☠️ Deleted account"
+            nama = "☠️ Deleted Account"
         if a.status == "administrator":
             if a.user.is_bot:
                 badmin.append(mention_markdown(a.user.id, nama))

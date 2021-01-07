@@ -15,11 +15,11 @@ from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
 __MODULE__ = "Downloads"
 __HELP__ = """
-Download any file from URL or from telegram
+Download any file from a URL or Telegram.
 
 ──「 **Download From URL** 」──
 -> `dl (url)`
-Give url as args to download it.
+Give a url as an arg to download it.
 
 ──「 **Download From Telegram** 」──
 -> `download`
@@ -27,21 +27,21 @@ Reply a document to download it.
 
 ──「 **Upload To Telegram** 」──
 -> `upload (path)`
-give path of file to send to telegram.
+Give a path of a file as an arg to upload to Telegram.
 
-──「 **List files and directories** 」──
--> `ls (path)`
-see list of files and directories, path is optional
+──「 **List Files & Directories** 」──
+-> `ls (*path)`
+See a list of files and dirs.
 
-──「 **Direct Link Download** 」──
+──「 **Direct Download Link** 」──
 -> `direct (url)`
-Create A direct link download
+Create a direct download link.
 
-Supported Link
-`gdrive     | zippyshare   | mega
+Supported Sites
+```gdrive     | zippyshare   | mega
 yadi.sk    | mediafire    | osdn.net
 github.com | Sourceforge
-androidfilehost.com`
+androidfilehost.com```
 """
 
 
@@ -118,7 +118,7 @@ async def download_from_url(_, message):
     try:
         os.listdir("nana/downloads/")
     except FileNotFoundError:
-        await edit_or_reply(message, text="Invalid download path in config!")
+        await edit_or_reply(message, text="Invalid download path is provided in config!")
         return
     await edit_or_reply(message, text="Downloading...")
     download = await download_url(url, file_name)
@@ -132,7 +132,7 @@ async def dssownload_from_telegram(client, message):
     if message.reply_to_message:
         await download_file_from_tg(client, message)
     else:
-        await edit_or_reply(message, text="Reply document to download it")
+        await edit_or_reply(message, text="Reply a document to download it.")
 
 
 @app.on_message(
@@ -141,7 +141,7 @@ async def dssownload_from_telegram(client, message):
 async def direct_link_generator(_, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await edit_or_reply(message, text="Write any args here!")
+        await edit_or_reply(message, text="Give me some arg(s).")
         return
     downloadurl = args[1]
     reply = ""

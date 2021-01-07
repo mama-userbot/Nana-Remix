@@ -16,12 +16,10 @@ from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Github"
 __HELP__ = """
-This module can help you find information about a github user!
+By using this module, you can get information about a GitHub user.
 
 ──「 **Github User Info** 」──
 -> `git (username)`
-Finding information about a github user.
-
 """
 
 
@@ -52,7 +50,7 @@ async def github(client, message):
             created_at = result.get("created_at", "Not Found")
             repo_url = f"https://github.com/{username}?tab=repositories"
             REPLY = (
-                "**GitHub Info for {}**"
+                "**Info Of {}**"
                 "\n**Username:** `{}`\n**Bio:** `{}`\n**Profile:** [Link]({})"
                 "\n**Company:** `{}`\n**Created at:** `{}`"
                 "\n**Repository:** [Link]({})"
@@ -76,7 +74,7 @@ async def github(client, message):
             drawing = svg2rlg(f"{file_name}.svg")
             renderPM.drawToFile(drawing, f"{file_name}.png")
         except UnboundLocalError:
-            await edit_or_reply(message, text="Username does not exist!")
+            await edit_or_reply(message, text="`User does not exist!`")
             await sleep(2)
             await message.delete()
             return

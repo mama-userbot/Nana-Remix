@@ -22,29 +22,26 @@ if DB_AVAILABLE:
 
 __MODULE__ = "Notes"
 __HELP__ = """
-Save a note, get that, even you can delete that note.
-This note only avaiable for yourself only!
-Also notes support inline button powered by inline query assistant bot.
+Save a note, get it or delete it.
+This is available only for yourself only!
+Also notes support inlines button powered by inline query assistant bot.
 
-──「 **Save Note** 」──
+──「 **Saving Notes** 」──
 -> `save (note)`
 Save a note, you can get or delete that later.
 
-──「 **Get Note** 」──
+──「 **Getting Notes** 」──
 -> `get (note)`
-Get that note, if avaiable.
+Get the provided note, if saved.
 
-──「 **Delete Note** 」──
+──「 **Deleting Notes** 」──
 -> `clear (note)`
-Delete that note, if avaiable.
+Delete the provided note, if saved.
 
 ──「 **All Notes** 」──
 -> `saved`
 -> `notes`
-Get all your notes,
-if too much notes,
-please use this in your saved message instead!
-
+See all of your saved notes.
 
 ── **Note Format** ──
 -> **Button**
@@ -78,7 +75,7 @@ GET_FORMAT = {
 )
 async def save_note(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     note_name, text, data_type, content = get_note_type(message)
 
@@ -86,7 +83,7 @@ async def save_note(_, message):
         await message.edit(
             "```"
             + message.text +
-            "```\n\nError: You must give a name for this note!"
+            "```\n\nError: you must provide a name for the note!"
         )
         return
 
@@ -96,7 +93,7 @@ async def save_note(_, message):
             await message.edit(
                 "```"
                 + message.text
-                + "```\n\nError: There is no text in here!"
+                + "```\n\nError: the note doesn't have enough content!"
             )
             return
 
@@ -107,7 +104,7 @@ async def save_note(_, message):
 @app.on_message(filters.user(Owner) & filters.command("get", COMMAND_PREFIXES))
 async def get_note(client, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     if len(message.text.split()) >= 2:
         note = message.text.split()[1]
@@ -130,14 +127,13 @@ async def get_note(client, message):
                 )
             except errors.exceptions.bad_request_400.BotInlineDisabled:
                 await message.edit(
-                    "Your bot inline isn't available!"
-                    "Check your bot for more information!"
+                    "Your haven't enabled inline for yout bot!"
                 )
                 await setbot.send_message(
                     Owner,
-                    "Hello, your notes is look like include button,"
-                    "but i can't do that "
-                    "because **inline mode** is not enabled.",
+                    "Hello, loosk like a note of yours include a button,"
+                    "but I can't display it "
+                    "because **inline mode** is not enabled in @BotFather.",
                 )
                 return
             try:
@@ -150,7 +146,7 @@ async def get_note(client, message):
                 )
             except IndexError:
                 await message.edit(
-                    "An error has accured!"
+                    "An error occured!"
                     "Check your assistant for more information!"
                 )
                 return
@@ -183,14 +179,13 @@ async def get_note(client, message):
                 )
             except errors.exceptions.bad_request_400.BotInlineDisabled:
                 await message.edit(
-                    "Your bot inline isn't available!\n"
-                    "Check your bot for more information!"
+                    "Your haven't enabled inline for yout bot!"
                 )
                 await setbot.send_message(
                     Owner,
-                    "Hello, your notes is look like include button,"
-                    "but i can't do that because "
-                    "**inline mode** is not enabled."
+                    "Hello, loosk like a note of yours include a button,"
+                    "but I can't display it "
+                    "because **inline mode** is not enabled in @BotFather.",
                 )
                 return
             try:
@@ -203,7 +198,7 @@ async def get_note(client, message):
                 )
             except IndexError:
                 message.edit(
-                    "An error has accured!"
+                    "An error occured!"
                 )
                 return
         else:
@@ -220,17 +215,17 @@ async def get_note(client, message):
 )
 async def local_notes(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     getnotes = db.get_all_selfnotes(message.from_user.id)
     if not getnotes:
         await message.edit("There are no notes in local notes!")
         return
-    rply = "**Local notes:**\n"
+    rply = "**Local Botes:**\n"
     for x in getnotes:
         if len(rply) >= 1800:
             await edit_or_reply(message, text=rply)
-            rply = "**Local notes:**\n"
+            rply = "**Local Botes:**\n"
         rply += f"- `{x}`\n"
 
     await message.edit(rply)
@@ -242,7 +237,7 @@ async def local_notes(_, message):
 )
 async def clear_note(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     if len(message.text.split()) <= 1:
         await message.edit("What do you want to clear?")

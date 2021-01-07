@@ -24,10 +24,10 @@ An AI Powered Chat Bot Module
 
 ──「 **Chatbot** 」──
 -> `addchat`
-Enables AI on chat
+Enables AI on chat.
 
 -> `rmchat`
-Removes AI on chat
+Removes AI on chat.
 
 Powered by CoffeeHouse API created by @Intellivoid.
 """

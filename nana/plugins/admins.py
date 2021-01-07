@@ -22,12 +22,12 @@ from nana.utils.capture_errors import capture_err
 
 __MODULE__ = "Admin"
 __HELP__ = """
-Module for Group Admins
+A useful module for group administrators.
 
-──「 **Locks / Unlocks** 」──
+──「 **Locks** 」──
 -> `lock` or `unlock`
-locks and unlocks permission in the group
-__Supported Locks / Unlocks__:
+Lock or unlock a permission in the group
+__Supported locks/unlock types are__:
  `messages` `media` `stickers`
  `polls` `info` `invite`
  `animations` `games`
@@ -35,43 +35,44 @@ __Supported Locks / Unlocks__:
  `pin` `all`
 
 -> `vlock`
-view group permissions
+View group permissions
 
-──「 **Promote / Demote** 」──
+──「 **Promote/Demote** 」──
 -> `promote`
-Reply to a user to promote
+Promote the replied user
 
 -> `demote`
-Reply to a user to demote
+Demote the replied user
 
-──「 **Ban / Unban** 」──
+──「 **Ban/Unban** 」──
 -> `ban` or `unban`
-Reply to a user to perform ban or unban
+Ban or unban the replied user
 
-──「 **Kick User** 」──
+──「 **Kicking** 」──
 -> `kick`
-Reply to a user to kick from chat
+Kick the replied user
 
-──「 **Mute / Unmute** 」──
+──「 **Mute/Unmute** 」──
 -> `mute` or `mute 24` or `unmute`
-Reply to a user to mute or unmute
+Mute or unmute the replied user
 
 ──「 **Invite Link** 」──
 -> `invite`
-Generate Invite link
+Generate chat invite link
 
 ──「 **Message Pin** 」──
 -> `pin`
-Reply a message to pin in the Group
-__Supported pin types__: `alert`, `notify`, `loud`
+Pin the replied message in the group
+__Supported arguments__:
+ `alert`, `notify`, `loud`
 
-──「 **Deleted Account** 」──
+──「 **Deleted Accounts** 」──
 -> `delacc` or `delacc clean`
-Checks Group for deleted accounts & clean them
+See or remove the deletes accounts in a group
 
 ──「 **Group Calls** 」──
 -> `cgroupcall` (**chat_id)
-Create a GroupCall
+Create a group call
 """
 
 custom_rank = ""
@@ -131,18 +132,18 @@ async def unpin_message(client, message):
             try:
                 await client.unpin_chat_message(chat_id)
             except UsernameInvalid:
-                await edit_or_reply(message, text="`invalid username`")
+                await edit_or_reply(message, text="`Invalid username`")
                 return
 
             except PeerIdInvalid:
                 await edit_or_reply(
                     message,
-                    text="`invalid username or userid`"
+                    text="`Invalid username or ID`"
                 )
                 return
 
             except UserIdInvalid:
-                await edit_or_reply(message, text="`invalid userid`")
+                await edit_or_reply(message, text="`Invalid ID`")
                 return
 
             except ChatAdminRequired:
@@ -150,7 +151,7 @@ async def unpin_message(client, message):
                 return
 
             except Exception as e:
-                await edit_or_reply(message, text=f"`Error!`\n**Log:** `{e}`")
+                await edit_or_reply(message, text=f"`Error occured!`\n**Log:** `{e}`")
                 return
         else:
             await edit_or_reply(message, text=tld("denied_permission"))
@@ -209,7 +210,7 @@ async def pin_message(client, message):
             except Exception as e:
                 await edit_or_reply(
                     message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
+                    text="`Error occured!`\n" f"**Log:** `{e}`"
                 )
                 return
         else:
@@ -248,7 +249,7 @@ async def mute_hammer(client, message):
             except Exception as e:
                 await edit_or_reply(
                     message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
+                    text="`Error occured!`\n" f"**Log:** `{e}`"
                 )
                 return
         else:
@@ -272,7 +273,7 @@ async def unmute(client, message):
                     usr = await client.get_users(message.command[1])
                     user_id = usr.id
             except IndexError:
-                await edit_or_reply(message, text="must give a user to unmute")
+                await edit_or_reply(message, text="Give me a user to mute")
                 return
             try:
                 await client.restrict_chat_member(
@@ -287,7 +288,7 @@ async def unmute(client, message):
             except Exception as e:
                 await edit_or_reply(
                     message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
+                    text="`Error occured!`\n" f"**Log:** `{e}`"
                 )
                 return
     else:
@@ -311,7 +312,7 @@ async def kick_user(client, message):
                     usr = await client.get_users(message.command[1])
                     user_id = usr.id
             except IndexError:
-                await edit_or_reply(message, text="must give a user to kick")
+                await edit_or_reply(message, text="Give me a user to kick")
                 return
             try:
                 get_mem = await client.get_chat_member(chat_id, user_id)
@@ -325,7 +326,7 @@ async def kick_user(client, message):
             except Exception as e:
                 await edit_or_reply(
                     message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
+                    text="`Error occured!`\n" f"**Log:** `{e}`"
                 )
                 return
         else:
@@ -359,13 +360,13 @@ async def ban_usr(client, message):
                     await client.kick_chat_member(chat_id, user_id)
                     await message.delete()
                 except UsernameInvalid:
-                    await edit_or_reply(message, text="`invalid username`")
+                    await edit_or_reply(message, text="`Invalid username`")
                     return
 
                 except PeerIdInvalid:
                     await edit_or_reply(
                         message,
-                        text="`invalid username or userid`"
+                        text="`Invalid username or ID`"
                     )
                     return
 
@@ -374,7 +375,7 @@ async def ban_usr(client, message):
                     return
 
                 except ChatAdminRequired:
-                    await edit_or_reply(message, text="`permission denied`")
+                    await edit_or_reply(message, text=tld("denied_permission"))
                     return
 
                 except Exception as e:
@@ -382,7 +383,7 @@ async def ban_usr(client, message):
                     return
 
         else:
-            await edit_or_reply(message, text="`permission denied`")
+            await edit_or_reply(message, text=tld("denied_permission"))
             return
     else:
         await message.delete()
@@ -411,13 +412,13 @@ async def unban_usr(client, message):
                 await client.unban_chat_member(chat_id, get_mem.user.id)
                 await message.delete()
             except UsernameInvalid:
-                await edit_or_reply(message, text="`invalid username`")
+                await edit_or_reply(message, text="`Invalid username`")
                 return
 
             except PeerIdInvalid:
                 await edit_or_reply(
                     message,
-                    text="`invalid username or userid`"
+                    text="`Invalid username or ID`"
                 )
                 return
 
@@ -426,7 +427,7 @@ async def unban_usr(client, message):
                 return
 
             except ChatAdminRequired:
-                await edit_or_reply(message, text="`permission denied`")
+                await edit_or_reply(message, text=tld("denied_permission"))
                 return
     else:
         await message.delete()
@@ -811,9 +812,9 @@ async def unlock_permission(client, message):
 
         except Exception as e:
             await edit_or_reply(
-                    message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
-                )
+                message,
+                text="`Error occured!`\n" f"**Log:** `{e}`"
+            )
     else:
         await message.delete()
 
@@ -881,7 +882,7 @@ async def view_perm(client, message):
             except Exception as e:
                 await edit_or_reply(
                     message,
-                    text="`Error!`\n" f"**Log:** `{e}`"
+                    text="`Error occured!`\n" f"**Log:** `{e}`"
                 )
     else:
         await message.delete()
@@ -900,13 +901,13 @@ async def deleted_clean(client, message):
     clean_tag = " ".join(cmd[1:])
     rm_delaccs = "clean" in clean_tag
     can_clean = await admin_check(message)
-    del_stats = "`no deleted accounts found in this chat`"
+    del_stats = "`No deleted accounts found in this chat.`"
 
     del_users = 0
     if rm_delaccs:
         if can_clean:
             await edit_or_reply(
-                message, text="`cleaning deleted accounts from this chat..`"
+                message, text="`Removing deleted accounts in this chat...`"
             )
             del_admins = 0
             del_total = 0
@@ -929,9 +930,9 @@ async def deleted_clean(client, message):
             del_stats = f"`Found` **{del_total}** `total accounts..`"
             await edit_or_reply(message, text=del_stats)
             await message.edit(
-                f"**Cleaned Deleted accounts**:\n"
+                f"**Finished Removing Deleted Accounts**:\n"
                 f"Total Deleted Accounts: `{del_total}`\n"
-                f"Cleaned Deleted Accounts: `{del_users}`\n"
+                f"Removed Deleted Accounts: `{del_users}`\n"
                 f"Chat: `{get_group.title}` (`{chat_id}`)"
             )
 

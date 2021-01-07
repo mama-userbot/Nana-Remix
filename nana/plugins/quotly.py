@@ -5,11 +5,9 @@ from nana.utils.sticker import create_sticker
 
 __MODULE__ = "Quotly"
 __HELP__ = """
-This module can make message text to sticker. (Experimental)
-
 ──「 **Make Quote From Message** 」──
 -> `q`
-__Reply To Message Text To Create Quote Sticker.__
+__make the replied message's text a QuotLy sticker__
 
 """
 
@@ -22,7 +20,7 @@ async def q_maker(_, message):
     if not message.reply_to_message:
         await edit_or_reply(
             message,
-            text="**Reply to any users text message**"
+            text="**Reply a message with text.**"
         )
         return
     await message.reply_to_message.forward("@QuotLyBot")
@@ -37,7 +35,7 @@ async def q_maker(_, message):
             print(e)
             await sleep(0.5)
             try:
-                print("Making a Quote")
+                print("`Making quote...`")
             except Exception as e:
                 print(e)
     msg_id = ms_g[0]["message_id"]

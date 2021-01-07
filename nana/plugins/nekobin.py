@@ -11,8 +11,7 @@ __MODULE__ = "Nekobin"
 __HELP__ = """
 ──「 **Paste to Nekobin** 」──
 -> `neko`
-Create a Nekobin paste using replied to message.
-
+Create a Nekobin paste with the content of replied message.
 """
 
 
@@ -82,7 +81,7 @@ async def get_paste_(_, message):
     """fetches the content of a dogbin or nekobin URL."""
     link = message.reply_to_message.text
     if not link:
-        await edit_or_reply(message, text="input not found!")
+        await edit_or_reply(message, text="Give me a link!")
         return
     await edit_or_reply(message, text="`Getting paste content...`")
     format_view = "https://del.dog/v/"
@@ -105,4 +104,4 @@ async def get_paste_(_, message):
         await edit_or_reply(message, text="Is that even a paste url?")
         return
     resp = await AioHttp().get_text(raw_link)
-    await edit_or_reply(message, text=f"**URL content**:\n`{resp}`")
+    await edit_or_reply(message, text=f"**Content**:\n`{resp}`")

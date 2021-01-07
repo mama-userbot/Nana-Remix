@@ -24,7 +24,7 @@ TODEL = {}
 )
 async def get_stickers(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     global TEMP_KEYBOARD, USER_SET
     await app.send_message("@Stickers", "/stats")
@@ -49,7 +49,7 @@ async def get_stickers(_, message):
 )
 async def get_stickers_animation(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     global TEMP_KEYBOARD, USER_SET
     await app.send_message("@Stickers", "/stats")
@@ -81,7 +81,7 @@ def get_stickerlist(_, message):
 @setbot.on_message(get_stickerlist)
 async def set_stickers(client, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     global TEMP_KEYBOARD, USER_SET
     if message.text in TEMP_KEYBOARD:
@@ -119,7 +119,7 @@ async def set_stickers(client, message):
 @setbot.on_callback_query(dynamic_data_filter("setsticker"))
 async def settings_sticker(_, message):
     if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
+        await message.edit("You haven't set up a database!")
         return
     global TEMP_KEYBOARD, USER_SET
     await app.send_message("@Stickers", "/stats")

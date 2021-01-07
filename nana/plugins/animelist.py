@@ -20,31 +20,30 @@ from nana.plugins.database import anime_db as sql
 __MODULE__ = "Anilist"
 
 __HELP__ = """
-Get information about anime,
+Module to get information about anime,
 manga or characters from [Anilist](https://anilist.co).
 
 ──「 **Anime** 」──
 -> `anime <anime>`
-returns information about the anime.
+Returns information about provided anime
 
 __Original Module by @Zero_cooll7870__
 
 ──「 **Character** 」──
 -> `character <character>`
-returns information about the character.
+Returns information about the provided character
 
 ──「 **Manga** 」──
 -> `manga <manga>`
-returns information about the manga.
+Returns information about the provided manga
 
 ──「 **Airing** 」──
 -> `airing <anime>`
-To get airing time of the anime.
+Get airing time of an anime
 
 ──「 **Favourite List** 」──
 -> `favourite`
-Get your favourite Anime list.
-
+Get your favourite list of anime
 """
 
 
@@ -246,15 +245,15 @@ async def add_favorite(_, query):
         match = query.data.split("_")[1]
         add = sql.add_fav(Owner, match)
         if add:
-            await query.answer("Added to Favourites", show_alert=True)
+            await query.answer("Added to favourites.", show_alert=True)
         else:
             await query.answer(
-                "Anime already Exists in Favourites",
+                "This anime is already in favourites.",
                 show_alert=True
             )
     else:
         await query.answer(
-            "You are not Allowed to Press this",
+            "You are not allowed to use this.",
             show_alert=True
         )
 
@@ -264,10 +263,10 @@ async def rem_favorite(_, query):
     if query.from_user.id in AdminSettings:
         sql.remove_fav(Owner)
         await setbot.edit_inline_text(
-            query.inline_message_id, "Removed from Favourites"
+            query.inline_message_id, "Removed from favourites."
         )
     else:
         await query.answer(
-            "You are not Allowed to Press this",
+            "You are not allowed to use this.",
             show_alert=True
         )

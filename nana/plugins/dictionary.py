@@ -8,8 +8,7 @@ from nana.utils.aiohttp_helper import AioHttp
 __HELP__ = """
 ──「 **Dictionary** 」──
 -> `dic`
-Search dictionary for given words
-
+Search dictionary for provided words
 """
 __MODULE__ = "Dictionary"
 
@@ -31,7 +30,7 @@ async def dictionary(_, message):
         await message.delete()
         return
     if not input_:
-        await edit_or_reply(message, text="`query not found`")
+        await edit_or_reply(message, text="`Query not found`")
         return
     else:
         word = input_
@@ -53,7 +52,7 @@ async def dictionary(_, message):
         else:
             await edit_or_reply(
                 message,
-                text="`No result found from the database.`"
+                text="`Couln't get any result from the database.`"
             )
 
 
@@ -93,7 +92,7 @@ def out_print(word1):
             out += combine(crosref, "crossReference")
     if "title" in list(word1):
         out += (
-            "**__Error Note__**\n\n▪️`"
+            "**__Error note__**\n\n▪️`"
             + word1["title"]
             + "\n\n▪️"
             + word1["message"]

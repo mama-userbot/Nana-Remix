@@ -6,11 +6,9 @@ from nana.utils.expand import expand_url
 
 __MODULE__ = "Link Expander"
 __HELP__ = """
-This module will expand your link
-
-──「 **expand url** 」──
+──「 **Expand URL** 」──
 -> `expand (link)`
-Reply or parse arg of url to expand
+Reply a short URL or include as an arg to expand it.
 """
 
 
@@ -36,8 +34,8 @@ async def expand(_, message):
             )
             return
         else:
-            await edit_or_reply(message, text="`i Cant expand this url :p`")
+            await edit_or_reply(message, text="`I can't expand this url :p`")
             await sleep(3)
             await message.delete()
     else:
-        await edit_or_reply(message, text="Nothing to expand")
+        await edit_or_reply(message, text="Nothing given to expand.")

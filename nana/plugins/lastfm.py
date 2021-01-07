@@ -6,10 +6,9 @@ from nana.utils.Pyroutils import ReplyCheck
 __HELP__ = """
 ──「 **LastFM** 」──
 -> `lastfm` or `lf`
-Share what you're what listening to with the help of this module!
+Share what you're listening to.
 
-Note: you need to go to @lastfmrobot and set your username there
-
+Note: you need to set you username in @lastfmrobot.
 """
 __MODULE__ = "Last.FM"
 

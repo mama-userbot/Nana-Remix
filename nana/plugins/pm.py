@@ -27,8 +27,8 @@ if DB_AVAILABLE:
     )
 
 welc_txt = f"""
-Hello, I'm {OwnerName}'s Userbot.
-Try contacting me by pressing buttons down below
+Hello, I'm {OwnerName}'s userbot.
+Try contacting me by using the buttons down below.
 """
 
 
@@ -80,7 +80,7 @@ async def approve_pm(_, message):
         else:
             message.delete()
             return
-    await message.edit("**PM permission was approved!**")
+    await message.edit("**Approved to PM!**")
     await asyncio.sleep(3)
     await message.delete()
 
@@ -99,7 +99,7 @@ async def revoke_pm_block(_, message):
         else:
             message.delete()
             return
-    await message.edit("**PM permission was revoked!**")
+    await message.edit("**PM permission revoked!**")
     await asyncio.sleep(3)
     await message.delete()
 
@@ -123,7 +123,7 @@ async def pm_button(client, query):
         and not re.match("engine_pm_blk", query.data)
     ):
         await client.answer_callback_query(
-            query.id, "No, you can't click by yourself", show_alert=False
+            query.id, "You shouln't click this.", show_alert=False
         )
         return
     if re.match("engine_pm_block", query.data):
@@ -132,14 +132,14 @@ async def pm_button(client, query):
         )
         await setbot.edit_inline_text(
             query.from_user.id,
-            "Sorry, No cash.\nGoodbye!",
+            "Sorry, no cash for today.\nGoodbye!",
         )
         await app.block_user(query.from_user.id)
     elif re.match("engine_pm_nope", query.data):
         await setbot.edit_inline_text(query.inline_message_id, "👍")
         await app.send_message(
             query.from_user.id,
-            "Hello, please wait for a reply from my master, thank you",
+            "Hello, please wait for a reply from my master, thank you.",
         )
         buttons = InlineKeyboardMarkup(
             [
@@ -158,7 +158,7 @@ async def pm_button(client, query):
         pm_bot_mention = mention_markdown(
             query.from_user.id, query.from_user.first_name
         )
-        pm_bot_message = f"{pm_bot_mention} want to contact you~"
+        pm_bot_message = f"~{pm_bot_mention} want to contact you~"
         await setbot.send_message(
             NOTIFY_ID,
             pm_bot_message,
@@ -169,7 +169,7 @@ async def pm_button(client, query):
         await setbot.edit_inline_text(query.inline_message_id, "👍")
         await app.send_message(
             query.from_user.id,
-            "Hello, if you want to report any bugs, visit @NanaBotSupport",
+            "Hello, if you want to report any bugs, visit @NanaBotSupport.",
         )
     elif re.match("engine_pm_none", query.data):
         await setbot.edit_inline_text(query.inline_message_id, "👍")
@@ -179,7 +179,7 @@ async def pm_button(client, query):
         )
     elif re.match("engine_pm_apr", query.data):
         target = query.data.split("-")[1]
-        await query.message.edit_text(f"[Approved for PM]({target})")
+        await query.message.edit_text(f"[Approved to PM]({target})")
         await app.send_message(
             target, "Hello, this is **Nana**, my master approved you to PM."
         )
@@ -189,7 +189,7 @@ async def pm_button(client, query):
         await query.message.edit_text("That user was blocked ~")
         await app.send_message(
             target,
-            "Hello, You have been Blocked.\nSorry for this!",
+            "Hello, you have been blocked.\nSorry about this!",
         )
         await app.block_user(target)
     else:
