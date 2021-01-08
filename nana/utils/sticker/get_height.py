@@ -7,7 +7,7 @@ async def get_y_and_heights(
     _, descent = font.getmetrics()
     line_heights = [
         font.getmask(
-            text_line
+            text_line,
         ).getbbox()[3] + descent + margin for text_line in text_wrapped
     ]
     line_heights[-1] -= margin

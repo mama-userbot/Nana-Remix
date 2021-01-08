@@ -10,24 +10,24 @@ from .get_height import get_y_and_heights
 from .rectangle import rounded_rectangle
 
 COLORS = [
-    "#F07975",
-    "#F49F69",
-    "#F9C84A",
-    "#8CC56E",
-    "#6CC7DC",
-    "#80C1FA",
-    "#BCB3F9",
-    "#E181AC"
+    '#F07975',
+    '#F49F69',
+    '#F9C84A',
+    '#8CC56E',
+    '#6CC7DC',
+    '#80C1FA',
+    '#BCB3F9',
+    '#E181AC',
 ]
 
 urlretrieve(
     'https://github.com/pokurt/Fonts/raw/master/NotoSansDisplay-Bold.ttf',
-    "nana/utils/sticker/NotoSansDisplay-Bold.ttf"
+    'nana/utils/sticker/NotoSansDisplay-Bold.ttf',
 )
 
 urlretrieve(
     'https://github.com/pokurt/Fonts/raw/master/OpenSans-Regular.ttf',
-    "nana/utils/sticker/OpenSans-Regular.ttf"
+    'nana/utils/sticker/OpenSans-Regular.ttf',
 )
 
 
@@ -49,18 +49,18 @@ async def create_sticker(client, message):
         wrap_size = 200
 
     font = ImageFont.truetype(
-        "nana/utils/sticker/OpenSans-Regular.ttf",
-        body_font_size
+        'nana/utils/sticker/OpenSans-Regular.ttf',
+        body_font_size,
     )
     font_who = ImageFont.truetype(
-        "nana/utils/sticker/NotoSansDisplay-Bold.ttf",
-        24
+        'nana/utils/sticker/NotoSansDisplay-Bold.ttf',
+        24,
     )
 
     img = Image.new(
-        "RGBA",
+        'RGBA',
         (512, 512),
-        (255, 255, 255, 0)
+        (255, 255, 255, 0),
     )
     draw = ImageDraw.Draw(img)
     draw.rounded_rectangle = rounded_rectangle
@@ -68,7 +68,7 @@ async def create_sticker(client, message):
     wrapper = TextWrapper(
         width=wrap_size,
         break_long_words=False,
-        replace_whitespace=False
+        replace_whitespace=False,
     )
     lines_list = [
         wrapper.wrap(i) for i in message.text.split('\n') if i != ''
@@ -79,7 +79,7 @@ async def create_sticker(client, message):
         text_lines,
         (512, 512),
         10,
-        font
+        font,
     )
 
     in_y = y
@@ -92,23 +92,23 @@ async def create_sticker(client, message):
         draw,
         (
             (90, in_y),
-            (512, rec_y + line_heights[-1])
+            (512, rec_y + line_heights[-1]),
         ),
         10,
-        fill="#e0e0e0"
+        fill='#e0e0e0',
     )
     first = message.from_user.first_name
     f_user = (
         first
-        + " "
+        + ' '
         + message.from_user.last_name
         if message.from_user.last_name else first
     )
     draw.text(
         (100, y),
-        f"{f_user}",
+        f'{f_user}',
         random.choice(COLORS),
-        font=font_who
+        font=font_who,
     )
 
     y = (y + (line_heights[0] * (20/100))) if wrap_size >= 40 else y
@@ -116,31 +116,31 @@ async def create_sticker(client, message):
     x = 100
     for i, line in enumerate(text_lines):
         y += line_heights[i]
-        draw.text((x, y), line, "#211536", font=font)
+        draw.text((x, y), line, '#211536', font=font)
 
     try:
         user_profile_pic = await client.get_profile_photos(
-            message.from_user.id
+            message.from_user.id,
         )
         photo = await client.download_media(user_profile_pic[0].file_id)
     except IndexError:
         urlretrieve(
-            "https://telegra.ph/file/1d3bf9a37547be4b04dcd.jpg",
-            "nana/utils/sticker/default.jpg"
+            'https://telegra.ph/file/1d3bf9a37547be4b04dcd.jpg',
+            'nana/utils/sticker/default.jpg',
         )
-        photo = "nana/utils/sticker/default.jpg"
+        photo = 'nana/utils/sticker/default.jpg'
 
-    im = Image.open(photo).convert("RGBA")
+    im = Image.open(photo).convert('RGBA')
     im.thumbnail((60, 60))
     await crop_to_circle(im)
     img.paste(im, (20, in_y))
 
-    sticker_file = f"{secrets.token_hex(2)}.webp"
+    sticker_file = f'{secrets.token_hex(2)}.webp'
 
     img.save(sticker_file)
 
     await message.reply_sticker(
-        sticker=sticker_file
+        sticker=sticker_file,
     )
 
     if os.path.isfile(sticker_file):

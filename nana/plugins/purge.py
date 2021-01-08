@@ -1,12 +1,17 @@
+import asyncio
 import math
 from datetime import datetime
-import asyncio
+
 from pyrogram import filters
 
+from nana import AdminSettings
+from nana import app
+from nana import COMMAND_PREFIXES
+from nana import edit_or_reply
+from nana import Owner
 from nana.utils.admincheck import admin_check
-from nana import Owner, app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
 
-__MODULE__ = "Purges"
+__MODULE__ = 'Purges'
 __HELP__ = """
 Use this module with your own risk!
 Developers created this module for managing groups, not anything else!
@@ -31,10 +36,10 @@ Delete the replied message.
 
 @app.on_message(
     filters.user(AdminSettings) &
-    filters.command("purge", COMMAND_PREFIXES)
+    filters.command('purge', COMMAND_PREFIXES),
 )
 async def purge_message(client, message):
-    if message.chat.type not in ("supergroup", "channel"):
+    if message.chat.type not in ('supergroup', 'channel'):
         return
     is_admin = await admin_check(message)
     if not is_admin:
@@ -46,40 +51,40 @@ async def purge_message(client, message):
     count_del_etion_s = 0
     if message.reply_to_message:
         for a_s_message_id in range(
-            message.reply_to_message.message_id, message.message_id
+            message.reply_to_message.message_id, message.message_id,
         ):
             message_ids.append(a_s_message_id)
             if len(message_ids) == 100:
                 await client.delete_messages(
                     chat_id=message.chat.id,
                     message_ids=message_ids,
-                    revoke=True
+                    revoke=True,
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
         if message_ids:
             await client.delete_messages(
-                chat_id=message.chat.id, message_ids=message_ids, revoke=True
+                chat_id=message.chat.id, message_ids=message_ids, revoke=True,
             )
             count_del_etion_s += len(message_ids)
     end_t = datetime.now()
     time_taken_ms = (end_t - start_t).seconds
     ms_g = await client.send_message(
         message.chat.id,
-        f"Purged {count_del_etion_s} messages in {time_taken_ms} seconds",
+        f'Purged {count_del_etion_s} messages in {time_taken_ms} seconds',
     )
     await asyncio.sleep(5)
     await ms_g.delete()
 
 
 @app.on_message(
-    filters.user(AdminSettings) & filters.command("purgeme", COMMAND_PREFIXES)
+    filters.user(AdminSettings) & filters.command('purgeme', COMMAND_PREFIXES),
 )
 async def purge_myself(client, message):
     if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
         target = int(message.text.split()[1])
     else:
-        await edit_or_reply(message, text="Give me a number for a range!")
+        await edit_or_reply(message, text='Give me a number for a range!')
     get_msg = await client.get_history(message.chat.id)
     listall = []
     counter = 0
@@ -98,14 +103,14 @@ async def purge_myself(client, message):
             if total >= 101:
                 jarak2 += 100
                 await client.delete_messages(
-                    message.chat.id, message_ids=semua[jarak:jarak2]
+                    message.chat.id, message_ids=semua[jarak:jarak2],
                 )
                 jarak += 100
                 total -= 100
             else:
                 jarak2 += total
                 await client.delete_messages(
-                    message.chat.id, message_ids=semua[jarak:jarak2]
+                    message.chat.id, message_ids=semua[jarak:jarak2],
                 )
                 jarak += total
                 total -= total
@@ -115,7 +120,7 @@ async def purge_myself(client, message):
 
 @app.on_message(
     filters.user(AdminSettings) &
-    filters.command("del", COMMAND_PREFIXES)
+    filters.command('del', COMMAND_PREFIXES),
 )
 async def delete_replied(client, message):
     msg_ids = [message.message_id]

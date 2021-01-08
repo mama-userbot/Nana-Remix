@@ -7,10 +7,16 @@ import os
 import pycurl
 from pyrogram import filters
 
-from nana import app, COMMAND_PREFIXES, log, AdminSettings, edit_or_reply
-from .downloads import download_file_from_tg, name_file, humanbytes
+from .downloads import download_file_from_tg
+from .downloads import humanbytes
+from .downloads import name_file
+from nana import AdminSettings
+from nana import app
+from nana import COMMAND_PREFIXES
+from nana import edit_or_reply
+from nana import log
 
-__MODULE__ = "Keep.sh"
+__MODULE__ = 'Keep.sh'
 __HELP__ = """
 Mirror any telegram file to keep.sh.
 
@@ -21,33 +27,33 @@ Reply to telegram file for mirroring it to keep.sh.
 
 
 @app.on_message(
-    filters.user(AdminSettings) & filters.command("keepsh", COMMAND_PREFIXES)
+    filters.user(AdminSettings) & filters.command('keepsh', COMMAND_PREFIXES),
 )
 async def tfsh(client, message):
     if not message.reply_to_message:
         await edit_or_reply(
             message,
-            text="`Reply to a file!`"
+            text='`Reply to a file!`',
         )
         return
-    await edit_or_reply(message, text="`Processing...`")
+    await edit_or_reply(message, text='`Processing...`')
     name = await name_file(client, message)
     await download_file_from_tg(client, message)
     name_file_upload = name[-10:] if len(name) > 10 else name
-    name_file_upload.encode("ascii", "ignore")
+    name_file_upload.encode('ascii', 'ignore')
     os.rename(
-        r"nana/downloads/{}".format(name),
-        r"nana/downloads/{}".format(name_file_upload)
+        fr'nana/downloads/{name}',
+        fr'nana/downloads/{name_file_upload}',
     )
     await edit_or_reply(
         message,
         text=await send_to_keepsh(
-            "nana/downloads/{}".format(name_file_upload),
-            message, name_file_upload
+            f'nana/downloads/{name_file_upload}',
+            message, name_file_upload,
         ),
         disable_web_page_preview=True,
     )
-    os.remove("nana/downloads/{}".format(name_file_upload))
+    os.remove(f'nana/downloads/{name_file_upload}')
     return
 
 
@@ -59,27 +65,27 @@ async def send_to_keepsh(file, message, name):
 
     await edit_or_reply(
         message,
-        text="\nSending file: {} (size: {})".format(
-            file_name, size_of_file
+        text='\nSending file: {} (size: {})'.format(
+            file_name, size_of_file,
         ),
     )
-    url = "https://free.keep.sh/{}".format(name)
+    url = f'https://free.keep.sh/{name}'
     c = pycurl.Curl()
     c.setopt(c.URL, url)
 
     c.setopt(c.UPLOAD, 1)
-    with open(file, "rb") as f:
+    with open(file, 'rb') as f:
         c.setopt(c.READDATA, f)
         try:
             download_link = c.perform_rs()
         except pycurl.error as e:
             log.error(e)
-            return "Unsupported file type!"
+            return 'Unsupported file type!'
         c.close()
     f.close()
-    return "`Success!\nWill be saved until {}`\n{}".format(
+    return '`Success!\nWill be saved until {}`\n{}'.format(
         final_date,
-        download_link
+        download_link,
     )
 
 

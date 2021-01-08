@@ -1,8 +1,13 @@
-from rextester_py import rexec_aio, rextester_aio
-from nana import app, AdminSettings, COMMAND_PREFIXES, edit_or_reply
 from pyrogram import filters
+from rextester_py import rexec_aio
+from rextester_py import rextester_aio
 
-__MODULE__ = "Rextester"
+from nana import AdminSettings
+from nana import app
+from nana import COMMAND_PREFIXES
+from nana import edit_or_reply
+
+__MODULE__ = 'Rextester'
 __HELP__ = """
 Yet the Another Developer Plugin.
 
@@ -29,7 +34,7 @@ Executes the give code with the given language
 
 @app.on_message(
     filters.user(AdminSettings) &
-    filters.command("rex", COMMAND_PREFIXES)
+    filters.command('rex', COMMAND_PREFIXES),
 )
 async def rex_tester(_, message):
     try:
@@ -39,23 +44,23 @@ async def rex_tester(_, message):
     except IndexError:
         await edit_or_reply(
             message,
-            text="Format: `rex lang code`"
+            text='Format: `rex lang code`',
         )
         return
     try:
         output = await rexec_aio(language, code)
-        final = f"**Language:** `{language}`\n"
-        final += f"**Input:**\n`{code}`\n"
+        final = f'**Language:** `{language}`\n'
+        final += f'**Input:**\n`{code}`\n'
         if output.results:
-            final += f"**Output:**\n`{output.results}`\n"
+            final += f'**Output:**\n`{output.results}`\n'
         if output.warnings:
-            final += f"**Warning:**\n`{output.warnings}`\n"
+            final += f'**Warning:**\n`{output.warnings}`\n'
         if output.errors:
-            final += f"**Error:**\n`{output.errors}`\n"
-        status = output.stats.split(", ")
-        final += "**Status:**\n"
+            final += f'**Error:**\n`{output.errors}`\n'
+        status = output.stats.split(', ')
+        final += '**Status:**\n'
         for x in status:
-            final += f"`{x}`\n"
+            final += f'`{x}`\n'
         await edit_or_reply(message, text=final)
     except rextester_aio.UnknownLanguage:
-        await edit_or_reply(message, text="Wrong language!")
+        await edit_or_reply(message, text='Wrong language!')

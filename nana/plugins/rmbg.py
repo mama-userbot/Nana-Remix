@@ -17,26 +17,26 @@ from nana import (
     COMMAND_PREFIXES,
     REMOVE_BG_API,
     AdminSettings,
-    edit_or_reply
+    edit_or_reply,
 )
 from nana.utils.Pyroutils import ReplyCheck
 
-DOWN_PATH = "nana/"
+DOWN_PATH = 'nana/'
 
-IMG_PATH = DOWN_PATH + "image.jpg"
+IMG_PATH = DOWN_PATH + 'image.jpg'
 
 
 @app.on_message(
     filters.user(AdminSettings) &
-    filters.command("rmbg", COMMAND_PREFIXES)
+    filters.command('rmbg', COMMAND_PREFIXES),
 )
 async def remove_bg(client, message):
     if not REMOVE_BG_API:
         await edit_or_reply(
             message,
-            text="Invalid API",
+            text='Invalid API',
             disable_web_page_preview=True,
-            parse_mode="html",
+            parse_mode='html',
         )
     replied = message.reply_to_message
     if (
@@ -44,16 +44,16 @@ async def remove_bg(client, message):
         and replied.media
         and (
             replied.photo
-            or (replied.document and "image" in replied.document.mime_type)
+            or (replied.document and 'image' in replied.document.mime_type)
         )
     ):
         if os.path.exists(IMG_PATH):
             os.remove(IMG_PATH)
         await client.download_media(message=replied, file_name=IMG_PATH)
         try:
-            rmbg = RemoveBg(REMOVE_BG_API, "rm_bg_error.txt")
+            rmbg = RemoveBg(REMOVE_BG_API, 'rm_bg_error.txt')
             rmbg.remove_background_from_img_file(IMG_PATH)
-            remove_img = IMG_PATH + "_no_bg.png"
+            remove_img = IMG_PATH + '_no_bg.png'
             await client.send_document(
                 chat_id=message.chat.id,
                 document=remove_img,
@@ -65,10 +65,10 @@ async def remove_bg(client, message):
             os.remove(IMG_PATH)
         except Exception as e:
             print(e)
-            await edit_or_reply(message, text="`Something went wrong!`")
+            await edit_or_reply(message, text='`Something went wrong!`')
             await sleep(3)
             await message.delete()
     else:
         await edit_or_reply(
-            message, text="Usage: reply to a photo to remove background!"
+            message, text='Usage: reply to a photo to remove background!',
         )
