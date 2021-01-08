@@ -61,6 +61,6 @@ async def rex_tester(_, message):
         final += '**Status:**\n'
         for x in status:
             final += f'`{x}`\n'
-        await edit_or_reply(message, text=final)
+        await edit_or_reply(message, text=final, parse_mode='markdown')
     except rextester_aio.UnknownLanguage:
         await edit_or_reply(message, text='Wrong language!')
