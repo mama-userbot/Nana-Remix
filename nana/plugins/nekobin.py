@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-import aiohttp
+from nekobin import NekoBin
 from pyrogram import filters
 
 from nana import AdminSettings
@@ -25,6 +25,7 @@ Create a Nekobin paste with the content of replied message.
 )
 @capture_err
 async def paste(client, message):
+    nekobin = NekoBin()
     if message.reply_to_message:
         text = message.reply_to_message.text
     if (
@@ -38,24 +39,16 @@ async def paste(client, message):
             text = doc.read()
         os.remove(path)
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                'https://nekobin.com/api/documents',
-                json={'content': text},
-                timeout=3,
-            ) as response:
-                key = (await response.json())['result']['key']
+        response = await nekobin.nekofy(text)
     except Exception:
         await message.edit_text('`Pasting failed`')
         await asyncio.sleep(2)
         await message.delete()
         return
     else:
-        url = f'https://nekobin.com/{key}'
-        raw_url = f'https://nekobin.com/raw/{key}'
         reply_text = '**Nekofied:**\n'
-        reply_text += f' - **Link**: {url}\n'
-        reply_text += f' - **Raw**: {raw_url}'
+        reply_text += f' - **Link**: {response.url}\n'
+        reply_text += f' - **Raw**: {response.raw}'
         delete = bool(
             len(message.command) > 1
             and message.command[1] in ['d', 'del']
