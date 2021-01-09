@@ -187,7 +187,7 @@ async def terminal(client, message):
 **Error:**
 ```{}```
 """.format(
-                        teks, err
+                        teks, err,
                     ),
                 )
             output += f'**{code}**\n'

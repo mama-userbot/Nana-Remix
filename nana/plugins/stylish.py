@@ -30,9 +30,9 @@ Your text here ɥʇ!ʍ
 f̶o̶r̶m̶a̶t̶t̶e̶d̶
 s̲t̲y̲l̲e̲
 """.replace(
-    '<', escape('<')
+    '<', escape('<'),
 ).replace(
-    '>', escape('>')
+    '>', escape('>'),
 )
 
 ud_dict = {

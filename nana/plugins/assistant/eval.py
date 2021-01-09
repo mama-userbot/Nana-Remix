@@ -84,7 +84,7 @@ async def terminal(client, message):
                     """
 **Error:**
 ```{}```
-""".format(err)
+""".format(err),
                 )
             output += f'**{code}**\n'
             output += process.stdout.read()[:-1].decode('utf-8')
