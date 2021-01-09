@@ -61,10 +61,11 @@ ENV ENV True
 
 # Install requirements
 COPY requirements.txt .
-RUN make install
 
 # copy the content of the local src directory to the working directory
 COPY . .
+
+RUN make install
 
 # Starting Worker
 CMD ["make","run"]
