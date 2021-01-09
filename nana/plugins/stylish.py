@@ -3,7 +3,10 @@ from html import escape
 
 from pyrogram import filters
 
-from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
+from nana import AdminSettings
+from nana import app
+from nana import COMMAND_PREFIXES
+from nana import edit_or_reply
 
 __MODULE__ = 'Stylish Text'
 __HELP__ = """

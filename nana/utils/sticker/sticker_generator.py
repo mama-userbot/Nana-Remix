@@ -1,10 +1,14 @@
 import itertools
 import os
-import secrets
-from urllib.request import urlretrieve
 import random
+import secrets
 from textwrap import TextWrapper
-from PIL import Image, ImageDraw, ImageFont
+from urllib.request import urlretrieve
+
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
 from .crop import crop_to_circle
 from .get_height import get_y_and_heights
 from .rectangle import rounded_rectangle

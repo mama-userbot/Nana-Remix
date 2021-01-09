@@ -6,19 +6,17 @@
 #
 # All rights reserved.
 # Ported to Nana by @pokurt
-
 import os
 from asyncio import sleep
 
-from removebg import RemoveBg
 from pyrogram import filters
-from nana import (
-    app,
-    COMMAND_PREFIXES,
-    REMOVE_BG_API,
-    AdminSettings,
-    edit_or_reply,
-)
+from removebg import RemoveBg
+
+from nana import AdminSettings
+from nana import app
+from nana import COMMAND_PREFIXES
+from nana import edit_or_reply
+from nana import REMOVE_BG_API
 from nana.utils.Pyroutils import ReplyCheck
 
 DOWN_PATH = 'nana/'
